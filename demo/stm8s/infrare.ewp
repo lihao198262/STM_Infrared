@@ -257,7 +257,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>$PROJ_DIR$/../../lib/STM8S_StdPeriph_Driver/inc</state>
+          <state>$PROJ_DIR$/../../inc</state>
+          <state>$PROJ_DIR$/</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1586,6 +1588,24 @@
       <data/>
     </settings>
   </configuration>
+  <group>
+    <name>src</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\src\infrared.c</name>
+    </file>
+  </group>
+  <group>
+    <name>STM8S_StdPeriph_Driver</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\lib\STM8S_StdPeriph_Driver\src\stm8s_clk.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\lib\STM8S_StdPeriph_Driver\src\stm8s_tim1.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\lib\STM8S_StdPeriph_Driver\src\stm8s_tim2.c</name>
+    </file>
+  </group>
   <file>
     <name>$PROJ_DIR$\main.c</name>
   </file>

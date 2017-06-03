@@ -1,6 +1,5 @@
 
 #include "infrared.h"
-#include "sysclock.h"
 
 
 #define TIMER1_PWM_PORT                 GPIOB
@@ -9,42 +8,10 @@
 //PWM的频率值
 #define TIMER1_PWM_FREQUENCY_VALUE      16*26   //26us为一个周期
 /* 全局变量定义 */
-u32 TimingDelay; 
-
-/*******************************************************************************
- * 名称: Tim1_Init
- * 功能: TIM1初始化操作
- * 形参: 无
- * 返回: 无
- * 说明: 无 
- ******************************************************************************/
-void TIM2_Time_Init(void)
-{
-  //1分频，向上计数，每50us定时中断一次， 重复计数器值为0 
-  TIM2_TimeBaseInit(TIM2_PRESCALER_1,800);
-  TIM2_SetCounter(0);                           /* 将计数器初值设为0 */
-  TIM2_ARRPreloadConfig(DISABLE);	        /* 预装载不使能 */
-  TIM2_ITConfig(TIM2_IT_UPDATE , ENABLE);	/* 计数器向上计数/向下计数溢出更新中断 */
-  TIM2_Cmd(ENABLE);			        /* 使能TIM1 */
-}
-
-/*******************************************************************************
- * 名称: delay_ms
- * 功能: 利用TIM1产生的1ms中断来计时
- * 形参: nms -> 计时值(ms)
- * 返回: 无
- * 说明: 无 
- ******************************************************************************/
-void Delay_50Us(u32 nTime)
-{
-  TimingDelay = nTime;
-  while(0 != TimingDelay)
-    ;
-}
 
 /*******************************************************************************
  * 名称: TIM1_PWM_Init
- * 功能: TIM1初始化函数
+ * 功能: TIM1初始化函数 用作PWM输出 38khz
  * 形参: 无
  * 返回: 无
  * 说明: 无 
@@ -202,6 +169,39 @@ void Haier_Infrared_Send(uint8_t data[], int len)
   Infrared_Send_Status(FALSE);
 }
 
+u32 TimingDelay; 
+
+/*******************************************************************************
+ * 名称: TIM2_Time_Init
+ * 功能: TIM2初始化操作 用作休眠计时
+ * 形参: 无
+ * 返回: 无
+ * 说明: 无 
+ ******************************************************************************/
+void TIM2_Time_Init(void)
+{
+  //1分频，向上计数，每50us定时中断一次， 重复计数器值为0 
+  TIM2_TimeBaseInit(TIM2_PRESCALER_1,800);
+  TIM2_SetCounter(0);                           /* 将计数器初值设为0 */
+  TIM2_ARRPreloadConfig(DISABLE);	        /* 预装载不使能 */
+  TIM2_ITConfig(TIM2_IT_UPDATE , ENABLE);	/* 计数器向上计数/向下计数溢出更新中断 */
+  TIM2_Cmd(ENABLE);			        /* 使能TIM1 */
+}
+
+/*******************************************************************************
+ * 名称: delay_ms
+ * 功能: 利用TIM1产生的1ms中断来计时
+ * 形参: nms -> 计时值(ms)
+ * 返回: 无
+ * 说明: 无 
+ ******************************************************************************/
+void Delay_50Us(u32 nTime)
+{
+  TimingDelay = nTime;
+  while(0 != TimingDelay)
+    ;
+}
+
 
 INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
 { 
@@ -209,4 +209,20 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
   TIM2_ClearITPendingBit(TIM2_IT_UPDATE);
 }
 
+
+/*******************************************************************************
+ * 名称: Infrared_Init()
+ * 功能: 初始化函数
+ * 形参: 无
+ * 返回: 无
+ * 说明: 无 
+ ******************************************************************************/
+void Infrared_Init(void)
+{
+  TIM1_PWM_Init();
+
+  TIM2_Time_Init();
+  
+  enableInterrupts(); 
+}
 
