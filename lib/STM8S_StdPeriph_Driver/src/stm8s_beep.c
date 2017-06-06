@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_beep.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all the functions for the BEEP peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -47,7 +53,7 @@
   */
 void BEEP_DeInit(void)
 {
-    BEEP->CSR = BEEP_CSR_RESET_VALUE;
+  BEEP->CSR = BEEP_CSR_RESET_VALUE;
 }
 
 /**
@@ -60,21 +66,19 @@ void BEEP_DeInit(void)
   */
 void BEEP_Init(BEEP_Frequency_TypeDef BEEP_Frequency)
 {
-
-    /* Check parameter */
-    assert_param(IS_BEEP_FREQUENCY_OK(BEEP_Frequency));
-
-    /* Set a default calibration value if no calibration is done */
-    if ((BEEP->CSR & BEEP_CSR_BEEPDIV) == BEEP_CSR_BEEPDIV)
-    {
-        BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPDIV); /* Clear bits */
-        BEEP->CSR |= BEEP_CALIBRATION_DEFAULT;
-    }
-
-    /* Select the output frequency */
-    BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPSEL);
-    BEEP->CSR |= (uint8_t)(BEEP_Frequency);
-
+  /* Check parameter */
+  assert_param(IS_BEEP_FREQUENCY_OK(BEEP_Frequency));
+  
+  /* Set a default calibration value if no calibration is done */
+  if ((BEEP->CSR & BEEP_CSR_BEEPDIV) == BEEP_CSR_BEEPDIV)
+  {
+    BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPDIV); /* Clear bits */
+    BEEP->CSR |= BEEP_CALIBRATION_DEFAULT;
+  }
+  
+  /* Select the output frequency */
+  BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPSEL);
+  BEEP->CSR |= (uint8_t)(BEEP_Frequency);
 }
 
 /**
@@ -86,16 +90,16 @@ void BEEP_Init(BEEP_Frequency_TypeDef BEEP_Frequency)
   */
 void BEEP_Cmd(FunctionalState NewState)
 {
-    if (NewState != DISABLE)
-    {
-        /* Enable the BEEP peripheral */
-        BEEP->CSR |= BEEP_CSR_BEEPEN;
-    }
-    else
-    {
-        /* Disable the BEEP peripheral */
-        BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPEN);
-    }
+  if (NewState != DISABLE)
+  {
+    /* Enable the BEEP peripheral */
+    BEEP->CSR |= BEEP_CSR_BEEPEN;
+  }
+  else
+  {
+    /* Disable the BEEP peripheral */
+    BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPEN);
+  }
 }
 
 /**
@@ -113,29 +117,28 @@ void BEEP_Cmd(FunctionalState NewState)
   */
 void BEEP_LSICalibrationConfig(uint32_t LSIFreqHz)
 {
-
-    uint16_t lsifreqkhz;
-    uint16_t A;
-
-    /* Check parameter */
-    assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
-
-    lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
-
-    /* Calculation of BEEPER calibration value */
-
-    BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPDIV); /* Clear bits */
-
-    A = (uint16_t)(lsifreqkhz >> 3U); /* Division by 8, keep integer part only */
-
-    if ((8U * A) >= ((lsifreqkhz - (8U * A)) * (1U + (2U * A))))
-    {
-        BEEP->CSR |= (uint8_t)(A - 2U);
-    }
-    else
-    {
-        BEEP->CSR |= (uint8_t)(A - 1U);
-    }
+  uint16_t lsifreqkhz;
+  uint16_t A;
+  
+  /* Check parameter */
+  assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
+  
+  lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
+  
+  /* Calculation of BEEPER calibration value */
+  
+  BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPDIV); /* Clear bits */
+  
+  A = (uint16_t)(lsifreqkhz >> 3U); /* Division by 8, keep integer part only */
+  
+  if ((8U * A) >= ((lsifreqkhz - (8U * A)) * (1U + (2U * A))))
+  {
+    BEEP->CSR |= (uint8_t)(A - 2U);
+  }
+  else
+  {
+    BEEP->CSR |= (uint8_t)(A - 1U);
+  }
 }
 
 /**
@@ -146,4 +149,5 @@ void BEEP_LSICalibrationConfig(uint32_t LSIFreqHz)
   * @}
   */
   
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

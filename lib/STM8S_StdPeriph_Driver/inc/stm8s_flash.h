@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_flash.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all functions prototype and macros for the FLASH peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -34,16 +40,16 @@
 
 #define FLASH_PROG_START_PHYSICAL_ADDRESS ((uint32_t)0x008000) /*!< Program memory: start address */
 
-#if defined (STM8S208) || defined (STM8S207) || defined (STM8AF52Ax) || defined (STM8AF62Ax)
+#if defined (STM8S208) || defined(STM8S207) || defined(STM8S007) || defined (STM8AF52Ax) || defined (STM8AF62Ax)
  #define FLASH_PROG_END_PHYSICAL_ADDRESS   ((uint32_t)0x027FFF) /*!< Program memory: end address */
  #define FLASH_PROG_BLOCKS_NUMBER          ((uint16_t)1024)     /*!< Program memory: total number of blocks */
  #define FLASH_DATA_START_PHYSICAL_ADDRESS ((uint32_t)0x004000) /*!< Data EEPROM memory: start address */
  #define FLASH_DATA_END_PHYSICAL_ADDRESS   ((uint32_t)0x0047FF) /*!< Data EEPROM memory: end address */
  #define FLASH_DATA_BLOCKS_NUMBER          ((uint16_t)16)       /*!< Data EEPROM memory: total number of blocks */
  #define FLASH_BLOCK_SIZE                  ((uint8_t)128)       /*!< Number of bytes in a block (common for Program and Data memories) */
-#endif /* STM8S208, STM8S207, STM8AF52Ax, STM8AF62Ax */
+#endif /* STM8S208, STM8S207, STM8S007, STM8AF52Ax, STM8AF62Ax */
 
-#if defined (STM8S105) || defined(STM8AF626x)
+#if defined(STM8S105) || defined(STM8S005) || defined(STM8AF626x)
  #define FLASH_PROG_END_PHYSICAL_ADDRESS   ((uint32_t)0xFFFF)   /*!< Program memory: end address */
  #define FLASH_PROG_BLOCKS_NUMBER          ((uint16_t)256)      /*!< Program memory: total number of blocks */
  #define FLASH_DATA_START_PHYSICAL_ADDRESS ((uint32_t)0x004000) /*!< Data EEPROM memory: start address */
@@ -52,14 +58,14 @@
  #define FLASH_BLOCK_SIZE                  ((uint8_t)128)       /*!< Number of bytes in a block (common for Program and Data memories) */
 #endif /* STM8S105 or STM8AF626x */
 
-#if defined (STM8S103) || defined(STM8S903)
+#if defined(STM8S103) || defined(STM8S003) || defined(STM8S903) || defined(STM8AF622x)
  #define FLASH_PROG_END_PHYSICAL_ADDRESS   ((uint32_t)0x9FFF)   /*!< Program memory: end address */
  #define FLASH_PROG_BLOCKS_NUMBER          ((uint16_t)128)      /*!< Program memory: total number of blocks */
  #define FLASH_DATA_START_PHYSICAL_ADDRESS ((uint32_t)0x004000) /*!< Data EEPROM memory: start address */
  #define FLASH_DATA_END_PHYSICAL_ADDRESS   ((uint32_t)0x00427F) /*!< Data EEPROM memory: end address */
  #define FLASH_DATA_BLOCKS_NUMBER          ((uint16_t)10)       /*!< Data EEPROM memory: total number of blocks */
  #define FLASH_BLOCK_SIZE                  ((uint8_t)64)        /*!< Number of bytes in a block (common for Program and Data memories) */
-#endif /* STM8S103, STM8S903 */
+#endif /* STM8S103 or STM8S003 or STM8S903 or STM8AF622x*/
 
 #define FLASH_RASS_KEY1 ((uint8_t)0x56) /*!< First RASS key */
 #define FLASH_RASS_KEY2 ((uint8_t)0xAE) /*!< Second RASS key */
@@ -117,8 +123,8 @@ FLASH_LPMode_TypeDef;
   * @brief  FLASH status of the last operation
   */
 typedef enum {
-#if defined (STM8S208) || defined(STM8S207) || defined(STM8S105) || defined (STM8AF52Ax) ||\
-    defined (STM8AF62Ax) || defined(STM8AF626x)		
+#if defined (STM8S208) || defined(STM8S207) || defined(STM8S007) || defined(STM8S105) || \
+    defined(STM8S005) || defined (STM8AF52Ax) || defined (STM8AF62Ax) || defined(STM8AF626x)		
 		FLASH_STATUS_END_HIGH_VOLTAGE           = (uint8_t)0x40, /*!< End of high voltage */
 #endif /* STM8S208, STM8S207, STM8S105, STM8AF62Ax, STM8AF52Ax, STM8AF626x */
 		FLASH_STATUS_SUCCESSFUL_OPERATION       = (uint8_t)0x04, /*!< End of operation flag */
@@ -131,8 +137,8 @@ typedef enum {
  * - Warning : FLAG value = mapping position register
   */
 typedef enum {
-#if defined (STM8S208) || defined(STM8S207) || defined(STM8S105) || defined (STM8AF52Ax) ||\
-    defined (STM8AF62Ax) || defined(STM8AF626x)
+#if defined (STM8S208) || defined(STM8S207) || defined(STM8S007) || defined(STM8S105) || \
+    defined(STM8S005) || defined (STM8AF52Ax) || defined (STM8AF62Ax) || defined(STM8AF626x)
     FLASH_FLAG_HVOFF     = (uint8_t)0x40,     /*!< End of high voltage flag */
 #endif /* STM8S208, STM8S207, STM8S105, STM8AF62Ax, STM8AF52Ax, STM8AF626x */
     FLASH_FLAG_DUL       = (uint8_t)0x08,     /*!< Data EEPROM unlocked flag */
@@ -225,14 +231,14 @@ typedef enum {
 /**
   * @brief  Macro used by the assert function in order to check the different flags values
   */
-#if defined (STM8S208) || defined(STM8S207) || defined(STM8S105) || defined (STM8AF52Ax) ||\
-    defined (STM8AF62Ax) || defined(STM8AF626x)
+#if defined (STM8S208) || defined(STM8S207) || defined(STM8S007) || defined(STM8S105) || \
+    defined(STM8S005) || defined (STM8AF52Ax) || defined (STM8AF62Ax) || defined(STM8AF626x)
  #define IS_FLASH_FLAGS_OK(FLAG) (((FLAG) == FLASH_FLAG_HVOFF) || \
                                  ((FLAG) == FLASH_FLAG_DUL) || \
                                  ((FLAG) == FLASH_FLAG_EOP) || \
                                  ((FLAG) == FLASH_FLAG_PUL) || \
                                  ((FLAG) == FLASH_FLAG_WR_PG_DIS))
-#else /* STM8S103, STM8S903 */
+#else /* STM8S103, STM8S903, STM8AF622x */
  #define IS_FLASH_FLAGS_OK(FLAG) (((FLAG) == FLASH_FLAG_DUL) || \
                                  ((FLAG) == FLASH_FLAG_EOP) || \
                                  ((FLAG) == FLASH_FLAG_PUL) || \
@@ -290,4 +296,5 @@ IN_RAM(FLASH_Status_TypeDef FLASH_WaitForLastOperation(FLASH_MemType_TypeDef FLA
 
 #endif /*__STM8S_FLASH_H */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

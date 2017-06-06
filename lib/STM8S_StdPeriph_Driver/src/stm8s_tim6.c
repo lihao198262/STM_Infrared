@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_tim6.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all the functions for the TIM6 peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -50,14 +56,14 @@
   */
 void TIM6_DeInit(void)
 {
-    TIM6->CR1 	= TIM6_CR1_RESET_VALUE;
-    TIM6->CR2 	= TIM6_CR2_RESET_VALUE;
-    TIM6->SMCR 	= TIM6_SMCR_RESET_VALUE;
-    TIM6->IER 	= TIM6_IER_RESET_VALUE;
-    TIM6->CNTR 	= TIM6_CNTR_RESET_VALUE;
-    TIM6->PSCR	= TIM6_PSCR_RESET_VALUE;
-    TIM6->ARR 	= TIM6_ARR_RESET_VALUE;
-    TIM6->SR1 	= TIM6_SR1_RESET_VALUE;
+  TIM6->CR1 	= TIM6_CR1_RESET_VALUE;
+  TIM6->CR2 	= TIM6_CR2_RESET_VALUE;
+  TIM6->SMCR 	= TIM6_SMCR_RESET_VALUE;
+  TIM6->IER 	= TIM6_IER_RESET_VALUE;
+  TIM6->CNTR 	= TIM6_CNTR_RESET_VALUE;
+  TIM6->PSCR	= TIM6_PSCR_RESET_VALUE;
+  TIM6->ARR 	= TIM6_ARR_RESET_VALUE;
+  TIM6->SR1 	= TIM6_SR1_RESET_VALUE;
 }
 
 /**
@@ -70,12 +76,12 @@ void TIM6_DeInit(void)
 void TIM6_TimeBaseInit(TIM6_Prescaler_TypeDef TIM6_Prescaler,
                        uint8_t TIM6_Period)
 {
-    /* Check TIM6 prescaler value */
-    assert_param(IS_TIM6_PRESCALER_OK(TIM6_Prescaler));
-    /* Set the Autoreload value */
-    TIM6->ARR = (uint8_t)(TIM6_Period);
-    /* Set the Prescaler value */
-    TIM6->PSCR = (uint8_t)(TIM6_Prescaler);
+  /* Check TIM6 prescaler value */
+  assert_param(IS_TIM6_PRESCALER_OK(TIM6_Prescaler));
+  /* Set the Autoreload value */
+  TIM6->ARR = (uint8_t)(TIM6_Period);
+  /* Set the Prescaler value */
+  TIM6->PSCR = (uint8_t)(TIM6_Prescaler);
 }
 
 /**
@@ -86,18 +92,18 @@ void TIM6_TimeBaseInit(TIM6_Prescaler_TypeDef TIM6_Prescaler,
   */
 void TIM6_Cmd(FunctionalState NewState)
 {
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    /* set or Reset the CEN Bit */
-    if (NewState == ENABLE)
-    {
-        TIM6->CR1 |= TIM6_CR1_CEN ;
-    }
-    else
-    {
-        TIM6->CR1 &= (uint8_t)(~TIM6_CR1_CEN) ;
-    }
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+  
+  /* set or Reset the CEN Bit */
+  if (NewState == ENABLE)
+  {
+    TIM6->CR1 |= TIM6_CR1_CEN ;
+  }
+  else
+  {
+    TIM6->CR1 &= (uint8_t)(~TIM6_CR1_CEN) ;
+  }
 }
 
 /**
@@ -108,18 +114,18 @@ void TIM6_Cmd(FunctionalState NewState)
   */
 void TIM6_UpdateDisableConfig(FunctionalState NewState)
 {
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    /* Set or Reset the UDIS Bit */
-    if (NewState == ENABLE)
-    {
-        TIM6->CR1 |= TIM6_CR1_UDIS ;
-    }
-    else
-    {
-        TIM6->CR1 &= (uint8_t)(~TIM6_CR1_UDIS) ;
-    }
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+  
+  /* Set or Reset the UDIS Bit */
+  if (NewState == ENABLE)
+  {
+    TIM6->CR1 |= TIM6_CR1_UDIS ;
+  }
+  else
+  {
+    TIM6->CR1 &= (uint8_t)(~TIM6_CR1_UDIS) ;
+  }
 }
 
 /**
@@ -130,18 +136,18 @@ void TIM6_UpdateDisableConfig(FunctionalState NewState)
   */
 void TIM6_UpdateRequestConfig(TIM6_UpdateSource_TypeDef TIM6_UpdateSource)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_UPDATE_SOURCE_OK(TIM6_UpdateSource));
-
-    /* Set or Reset the URS Bit */
-    if (TIM6_UpdateSource == TIM6_UPDATESOURCE_REGULAR)
-    {
-        TIM6->CR1 |= TIM6_CR1_URS ;
-    }
-    else
-    {
-        TIM6->CR1 &= (uint8_t)(~TIM6_CR1_URS) ;
-    }
+  /* Check the parameters */
+  assert_param(IS_TIM6_UPDATE_SOURCE_OK(TIM6_UpdateSource));
+  
+  /* Set or Reset the URS Bit */
+  if (TIM6_UpdateSource == TIM6_UPDATESOURCE_REGULAR)
+  {
+    TIM6->CR1 |= TIM6_CR1_URS ;
+  }
+  else
+  {
+    TIM6->CR1 &= (uint8_t)(~TIM6_CR1_URS) ;
+  }
 }
 
 /**
@@ -152,19 +158,18 @@ void TIM6_UpdateRequestConfig(TIM6_UpdateSource_TypeDef TIM6_UpdateSource)
   */
 void TIM6_SelectOnePulseMode(TIM6_OPMode_TypeDef TIM6_OPMode)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_OPM_MODE_OK(TIM6_OPMode));
-
-    /* Set or Reset the OPM Bit */
-    if (TIM6_OPMode == TIM6_OPMODE_SINGLE)
-    {
-        TIM6->CR1 |= TIM6_CR1_OPM ;
-    }
-    else
-    {
-        TIM6->CR1 &= (uint8_t)(~TIM6_CR1_OPM) ;
-    }
-
+  /* Check the parameters */
+  assert_param(IS_TIM6_OPM_MODE_OK(TIM6_OPMode));
+  
+  /* Set or Reset the OPM Bit */
+  if (TIM6_OPMode == TIM6_OPMODE_SINGLE)
+  {
+    TIM6->CR1 |= TIM6_CR1_OPM ;
+  }
+  else
+  {
+    TIM6->CR1 &= (uint8_t)(~TIM6_CR1_OPM) ;
+  }
 }
 
 /**
@@ -178,22 +183,22 @@ void TIM6_SelectOnePulseMode(TIM6_OPMode_TypeDef TIM6_OPMode)
 void TIM6_PrescalerConfig(TIM6_Prescaler_TypeDef Prescaler,
                           TIM6_PSCReloadMode_TypeDef TIM6_PSCReloadMode)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_PRESCALER_RELOAD_OK(TIM6_PSCReloadMode));
-    assert_param(IS_TIM6_PRESCALER_OK(Prescaler));
-
-    /* Set the Prescaler value */
-    TIM6->PSCR = (uint8_t)Prescaler;
-
-    /* Set or reset the UG Bit */
-    if (TIM6_PSCReloadMode == TIM6_PSCRELOADMODE_IMMEDIATE)
-    {
-        TIM6->EGR |= TIM6_EGR_UG ;
-    }
-    else
-    {
-        TIM6->EGR &= (uint8_t)(~TIM6_EGR_UG) ;
-    }
+  /* Check the parameters */
+  assert_param(IS_TIM6_PRESCALER_RELOAD_OK(TIM6_PSCReloadMode));
+  assert_param(IS_TIM6_PRESCALER_OK(Prescaler));
+  
+  /* Set the Prescaler value */
+  TIM6->PSCR = (uint8_t)Prescaler;
+  
+  /* Set or reset the UG Bit */
+  if (TIM6_PSCReloadMode == TIM6_PSCRELOADMODE_IMMEDIATE)
+  {
+    TIM6->EGR |= TIM6_EGR_UG ;
+  }
+  else
+  {
+    TIM6->EGR &= (uint8_t)(~TIM6_EGR_UG) ;
+  }
 }
 
 /**
@@ -204,18 +209,18 @@ void TIM6_PrescalerConfig(TIM6_Prescaler_TypeDef Prescaler,
   */
 void TIM6_ARRPreloadConfig(FunctionalState NewState)
 {
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    /* Set or Reset the ARPE Bit */
-    if (NewState == ENABLE)
-    {
-        TIM6->CR1 |= TIM6_CR1_ARPE ;
-    }
-    else
-    {
-        TIM6->CR1 &= (uint8_t)(~TIM6_CR1_ARPE) ;
-    }
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+  
+  /* Set or Reset the ARPE Bit */
+  if (NewState == ENABLE)
+  {
+    TIM6->CR1 |= TIM6_CR1_ARPE ;
+  }
+  else
+  {
+    TIM6->CR1 &= (uint8_t)(~TIM6_CR1_ARPE) ;
+  }
 }
 
 /**
@@ -226,8 +231,8 @@ void TIM6_ARRPreloadConfig(FunctionalState NewState)
   */
 void TIM6_SetCounter(uint8_t Counter)
 {
-    /* Set the Counter Register value */
-    TIM6->CNTR = (uint8_t)(Counter);
+  /* Set the Counter Register value */
+  TIM6->CNTR = (uint8_t)(Counter);
 }
 
 /**
@@ -238,9 +243,8 @@ void TIM6_SetCounter(uint8_t Counter)
   */
 void TIM6_SetAutoreload(uint8_t Autoreload)
 {
-
-    /* Set the Autoreload Register value */
-    TIM6->ARR = (uint8_t)(Autoreload);
+  /* Set the Autoreload Register value */
+  TIM6->ARR = (uint8_t)(Autoreload);
 }
 
 /**
@@ -250,10 +254,10 @@ void TIM6_SetAutoreload(uint8_t Autoreload)
   */
 uint8_t TIM6_GetCounter(void)
 {
-    uint8_t tmpcntr=0;
-    tmpcntr = TIM6->CNTR;
-    /* Get the Counter Register value */
-    return ((uint8_t)tmpcntr);
+  uint8_t tmpcntr=0;
+  tmpcntr = TIM6->CNTR;
+  /* Get the Counter Register value */
+  return ((uint8_t)tmpcntr);
 }
 
 /**
@@ -263,8 +267,8 @@ uint8_t TIM6_GetCounter(void)
   */
 TIM6_Prescaler_TypeDef TIM6_GetPrescaler(void)
 {
-    /* Get the Prescaler Register value */
-    return ((TIM6_Prescaler_TypeDef)TIM6->PSCR);
+  /* Get the Prescaler Register value */
+  return ((TIM6_Prescaler_TypeDef)TIM6->PSCR);
 }
 
 /**
@@ -272,7 +276,7 @@ TIM6_Prescaler_TypeDef TIM6_GetPrescaler(void)
   * @param   TIM6_IT : Specifies the TIM6 interrupts sources to be enabled or disabled.
   * This parameter can be any combination of the @ref TIM6_IT_TypeDef enumeration.
   * @param   NewState : The new state of the TIM6 peripheral.
-	* This parameter can be any of the @ref FunctionalState enumeration.
+  * This parameter can be any of the @ref FunctionalState enumeration.
   * @retval None
   * @par Required preconditions:
   * If QST option bit is enabled, the TIM6 Interrupt vector will be mapped on IRQ number 2 (irq0).
@@ -280,20 +284,20 @@ TIM6_Prescaler_TypeDef TIM6_GetPrescaler(void)
   */
 void TIM6_ITConfig(TIM6_IT_TypeDef TIM6_IT, FunctionalState NewState)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_IT_OK(TIM6_IT));
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState == ENABLE)
-    {
-        /* Enable the Interrupt sources */
-        TIM6->IER |= (uint8_t)TIM6_IT;
-    }
-    else
-    {
-        /* Disable the Interrupt sources */
-        TIM6->IER &= (uint8_t)(~(uint8_t)TIM6_IT);
-    }
+  /* Check the parameters */
+  assert_param(IS_TIM6_IT_OK(TIM6_IT));
+  assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+  
+  if (NewState == ENABLE)
+  {
+    /* Enable the Interrupt sources */
+    TIM6->IER |= (uint8_t)TIM6_IT;
+  }
+  else
+  {
+    /* Disable the Interrupt sources */
+    TIM6->IER &= (uint8_t)(~(uint8_t)TIM6_IT);
+  }
 }
 
 /**
@@ -304,10 +308,10 @@ void TIM6_ITConfig(TIM6_IT_TypeDef TIM6_IT, FunctionalState NewState)
   */
 void TIM6_ClearFlag(TIM6_FLAG_TypeDef TIM6_FLAG)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_CLEAR_FLAG_OK((uint8_t)TIM6_FLAG));
-    /* Clear the flags (rc_w0) clear this bit by writing 0. Writing ‘1’ has no effect*/
-    TIM6->SR1 &= (uint8_t)(~((uint8_t)TIM6_FLAG));
+  /* Check the parameters */
+  assert_param(IS_TIM6_CLEAR_FLAG_OK((uint8_t)TIM6_FLAG));
+  /* Clear the flags (rc_w0) clear this bit by writing 0. Writing ‘1’ has no effect*/
+  TIM6->SR1 &= (uint8_t)(~((uint8_t)TIM6_FLAG));
 }
 
 /**
@@ -315,30 +319,29 @@ void TIM6_ClearFlag(TIM6_FLAG_TypeDef TIM6_FLAG)
   * @param   TIM6_IT : Specifies the TIM6 interrupt source to check.
   * This parameter can be one of the @ref TIM6_IT_TypeDef enumeration.
   * @retval ITStatus : The new state of the TIM6_IT.
-	* This parameter can be any of the @ref ITStatus enumeration.
+  * This parameter can be any of the @ref ITStatus enumeration.
   */
-
 ITStatus TIM6_GetITStatus(TIM6_IT_TypeDef TIM6_IT)
 {
-    ITStatus bitstatus = RESET;
-    uint8_t itStatus = 0, itEnable = 0;
-
-    /* Check the parameters */
-    assert_param(IS_TIM6_GET_IT_OK(TIM6_IT));
-
-    itStatus = (uint8_t)(TIM6->SR1 & (uint8_t)TIM6_IT);
-
-    itEnable = (uint8_t)(TIM6->IER & (uint8_t)TIM6_IT);
-
-    if ((itStatus != (uint8_t)RESET ) && (itEnable != (uint8_t)RESET ))
-    {
-        bitstatus = (ITStatus)SET;
-    }
-    else
-    {
-        bitstatus = (ITStatus)RESET;
-    }
-    return ((ITStatus)bitstatus);
+  ITStatus bitstatus = RESET;
+  uint8_t itStatus = 0, itEnable = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_TIM6_GET_IT_OK(TIM6_IT));
+  
+  itStatus = (uint8_t)(TIM6->SR1 & (uint8_t)TIM6_IT);
+  
+  itEnable = (uint8_t)(TIM6->IER & (uint8_t)TIM6_IT);
+  
+  if ((itStatus != (uint8_t)RESET ) && (itEnable != (uint8_t)RESET ))
+  {
+    bitstatus = (ITStatus)SET;
+  }
+  else
+  {
+    bitstatus = (ITStatus)RESET;
+  }
+  return ((ITStatus)bitstatus);
 }
 
 /**
@@ -349,11 +352,11 @@ ITStatus TIM6_GetITStatus(TIM6_IT_TypeDef TIM6_IT)
   */
 void TIM6_GenerateEvent(TIM6_EventSource_TypeDef TIM6_EventSource)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_EVENT_SOURCE_OK((uint8_t)TIM6_EventSource));
-
-    /* Set the event sources */
-    TIM6->EGR |= (uint8_t)TIM6_EventSource;
+  /* Check the parameters */
+  assert_param(IS_TIM6_EVENT_SOURCE_OK((uint8_t)TIM6_EventSource));
+  
+  /* Set the event sources */
+  TIM6->EGR |= (uint8_t)TIM6_EventSource;
 }
 
 /**
@@ -361,39 +364,39 @@ void TIM6_GenerateEvent(TIM6_EventSource_TypeDef TIM6_EventSource)
   * @param   TIM6_FLAG : Specifies the flag to check.
   * This parameter can be one of the @ref TIM6_FLAG_TypeDef enumeration.
   * @retval FlagStatus : The new state of TIM6_FLAG.
-	* This parameter can be any of the @ref FlagStatus enumeration.
+  * This parameter can be any of the @ref FlagStatus enumeration.
   */
 FlagStatus TIM6_GetFlagStatus(TIM6_FLAG_TypeDef TIM6_FLAG)
 {
-    volatile FlagStatus bitstatus = RESET;
-
-    /* Check the parameters */
-    assert_param(IS_TIM6_GET_FLAG_OK(TIM6_FLAG));
-
-    if ((TIM6->SR1 & (uint8_t)TIM6_FLAG)  != 0)
-    {
-        bitstatus = SET;
-    }
-    else
-    {
-        bitstatus = RESET;
-    }
-    return ((FlagStatus)bitstatus);
+  volatile FlagStatus bitstatus = RESET;
+  
+  /* Check the parameters */
+  assert_param(IS_TIM6_GET_FLAG_OK(TIM6_FLAG));
+  
+  if ((TIM6->SR1 & (uint8_t)TIM6_FLAG)  != 0)
+  {
+    bitstatus = SET;
+  }
+  else
+  {
+    bitstatus = RESET;
+  }
+  return ((FlagStatus)bitstatus);
 }
 
 /**
   * @brief  Clears the TIM6's interrupt pending bits.
   * @param   TIM6_IT : Specifies the pending bit to clear.
- * This parameter can be one of the @ref TIM6_IT_TypeDef enumeration.
+  * This parameter can be one of the @ref TIM6_IT_TypeDef enumeration.
   * @retval None
   */
 void TIM6_ClearITPendingBit(TIM6_IT_TypeDef TIM6_IT)
 {
-    /* Check the parameters */
-    assert_param(IS_TIM6_IT_OK(TIM6_IT));
-
-    /* Clear the IT pending Bit */
-    TIM6->SR1 &= (uint8_t)(~(uint8_t)TIM6_IT);
+  /* Check the parameters */
+  assert_param(IS_TIM6_IT_OK(TIM6_IT));
+  
+  /* Clear the IT pending Bit */
+  TIM6->SR1 &= (uint8_t)(~(uint8_t)TIM6_IT);
 }
 
 /**
@@ -404,43 +407,43 @@ void TIM6_ClearITPendingBit(TIM6_IT_TypeDef TIM6_IT)
   */
 void TIM6_SelectOutputTrigger(TIM6_TRGOSource_TypeDef TIM6_TRGOSource)
 {
-    uint8_t tmpcr2 = 0;
-
-    /* Check the parameters */
-    assert_param(IS_TIM6_TRGO_SOURCE_OK(TIM6_TRGOSource));
-
-    tmpcr2 = TIM6->CR2;
-
-    /* Reset the MMS Bits */
-    tmpcr2 &= (uint8_t)(~TIM6_CR2_MMS);
-
-    /* Select the TRGO source */
-    tmpcr2 |=  (uint8_t)TIM6_TRGOSource;
-
-    TIM6->CR2 = tmpcr2;
+  uint8_t tmpcr2 = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_TIM6_TRGO_SOURCE_OK(TIM6_TRGOSource));
+  
+  tmpcr2 = TIM6->CR2;
+  
+  /* Reset the MMS Bits */
+  tmpcr2 &= (uint8_t)(~TIM6_CR2_MMS);
+  
+  /* Select the TRGO source */
+  tmpcr2 |=  (uint8_t)TIM6_TRGOSource;
+  
+  TIM6->CR2 = tmpcr2;
 }
 
 /**
   * @brief  Sets or Resets the TIM6 Master/Slave Mode.
   * @param   NewState : The new state of the synchronization between TIM6 and its slaves (through TRGO).
-	* This parameter can be any of the @ref FunctionalState enumeration.
+  * This parameter can be any of the @ref FunctionalState enumeration.
   * @retval None
   */
 
 void TIM6_SelectMasterSlaveMode(FunctionalState NewState)
 {
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    /* Set or Reset the MSM Bit */
-    if (NewState == ENABLE)
-    {
-        TIM6->SMCR |= TIM6_SMCR_MSM;
-    }
-    else
-    {
-        TIM6->SMCR &= (uint8_t)(~TIM6_SMCR_MSM);
-    }
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+  
+  /* Set or Reset the MSM Bit */
+  if (NewState == ENABLE)
+  {
+    TIM6->SMCR |= TIM6_SMCR_MSM;
+  }
+  else
+  {
+    TIM6->SMCR &= (uint8_t)(~TIM6_SMCR_MSM);
+  }
 }
 
 /**
@@ -451,18 +454,18 @@ void TIM6_SelectMasterSlaveMode(FunctionalState NewState)
   */
 void TIM6_SelectInputTrigger(TIM6_TS_TypeDef TIM6_InputTriggerSource)
 {
-    uint8_t tmpsmcr = 0;
-
-    /* Check the parameters */
-    assert_param(IS_TIM6_TRIGGER_SELECTION_OK(TIM6_InputTriggerSource));
-
-    tmpsmcr = TIM6->SMCR;
-
-    /* Select the Tgigger Source */
-    tmpsmcr &= (uint8_t)(~TIM6_SMCR_TS);
-    tmpsmcr |= (uint8_t)TIM6_InputTriggerSource;
-
-    TIM6->SMCR = (uint8_t)tmpsmcr;
+  uint8_t tmpsmcr = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_TIM6_TRIGGER_SELECTION_OK(TIM6_InputTriggerSource));
+  
+  tmpsmcr = TIM6->SMCR;
+  
+  /* Select the Trigger Source */
+  tmpsmcr &= (uint8_t)(~TIM6_SMCR_TS);
+  tmpsmcr |= (uint8_t)TIM6_InputTriggerSource;
+  
+  TIM6->SMCR = (uint8_t)tmpsmcr;
 }
 
 /**
@@ -472,8 +475,8 @@ void TIM6_SelectInputTrigger(TIM6_TS_TypeDef TIM6_InputTriggerSource)
   */
 void TIM6_InternalClockConfig(void)
 {
-    /* Disable slave mode to clock the prescaler directly with the internal clock */
-    TIM6->SMCR &=  (uint8_t)(~TIM6_SMCR_SMS);
+  /* Disable slave mode to clock the prescaler directly with the internal clock */
+  TIM6->SMCR &=  (uint8_t)(~TIM6_SMCR_SMS);
 }
 
 /**
@@ -484,20 +487,20 @@ void TIM6_InternalClockConfig(void)
   */
 void TIM6_SelectSlaveMode(TIM6_SlaveMode_TypeDef TIM6_SlaveMode)
 {
-    uint8_t tmpsmcr = 0;
-
-    /* Check the parameters */
-    assert_param(IS_TIM6_SLAVE_MODE_OK(TIM6_SlaveMode));
-
-    tmpsmcr = TIM6->SMCR;
-
-    /* Reset the SMS Bits */
-    tmpsmcr &= (uint8_t)(~TIM6_SMCR_SMS);
-
-    /* Select the Slave Mode */
-    tmpsmcr |= (uint8_t)TIM6_SlaveMode;
-
-    TIM6->SMCR = tmpsmcr;
+  uint8_t tmpsmcr = 0;
+  
+  /* Check the parameters */
+  assert_param(IS_TIM6_SLAVE_MODE_OK(TIM6_SlaveMode));
+  
+  tmpsmcr = TIM6->SMCR;
+  
+  /* Reset the SMS Bits */
+  tmpsmcr &= (uint8_t)(~TIM6_SMCR_SMS);
+  
+  /* Select the Slave Mode */
+  tmpsmcr |= (uint8_t)TIM6_SlaveMode;
+  
+  TIM6->SMCR = tmpsmcr;
 }
 
 /**
@@ -508,4 +511,5 @@ void TIM6_SelectSlaveMode(TIM6_SlaveMode_TypeDef TIM6_SlaveMode)
   * @}
   */
   
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_can.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all the functions for the CAN peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -76,8 +82,8 @@ typedef enum {
   * @brief  CAN operating mode status */
  typedef enum
 {
-  CAN_ModeStatus_Failed    = ((uint8_t)0x00),          /*!< CAN entring the specific mode failed */
-  CAN_ModeStatus_Success    =! CAN_ModeStatus_Failed   /*!< CAN entring the specific mode Succeed */
+  CAN_ModeStatus_Failed    = ((uint8_t)0x00),          /*!< CAN entering the specific mode failed */
+  CAN_ModeStatus_Success    =! CAN_ModeStatus_Failed   /*!< CAN entering the specific mode Succeed */
 }CAN_ModeStatus_TypeDef;
 
  /**
@@ -91,7 +97,7 @@ typedef enum
  CAN_MasterCtrl_AutoBusOffManagement =((uint8_t)0x40),  /*!<  CAN Auto Bus Off Management ENABLED */
  CAN_MasterCtrl_AutoWakeUpMode       =((uint8_t)0x20),  /*!<  CAN Automatic WakeUp Mode ENABLED , sleep mode is left automatically by hardware  */
  CAN_MasterCtrl_NoAutoReTx           =((uint8_t)0x10),  /*!<  CAN Non Automatic Retransmission ENABLED, MSG  will be transmitted only once */
- CAN_MasterCtrl_RxFifoLockedMode     =((uint8_t)0x08),  /*!<  CAN Recieve FIFO Locked  against overrun ENABLED */
+ CAN_MasterCtrl_RxFifoLockedMode     =((uint8_t)0x08),  /*!<  CAN Receive FIFO Locked  against overrun ENABLED */
  CAN_MasterCtrl_TxFifoPriority       =((uint8_t)0x04)   /*!<  CAN Transmit FIFO Priority  driven by the request order (not by the identifier of the MSG) */
  }CAN_MasterCtrl_TypeDef;
 
@@ -296,8 +302,8 @@ typedef enum
   * @brief   CAN ST7 Compatibility*/
 typedef enum
 {
-  CAN_ST7Compatibility_Enable     =  ((uint8_t)0x00), /*!< CAN is compatible with ST7 beCAN (only 2 mailboxes are availble)*/
-  CAN_ST7Compatibility_Disable    =  ((uint8_t)0x10)  /*!< CAN is not compatible with ST7 beCAN ( 3 mailboxes are availble)*/
+  CAN_ST7Compatibility_Enable     =  ((uint8_t)0x00), /*!< CAN is compatible with ST7 beCAN (only 2 mailboxes are available)*/
+  CAN_ST7Compatibility_Disable    =  ((uint8_t)0x10)  /*!< CAN is not compatible with ST7 beCAN ( 3 mailboxes are available)*/
 }CAN_ST7Compatibility_TypeDef;
 
 /**
@@ -452,7 +458,7 @@ typedef enum
   * @}
   */
 
-/* Exported function protypes ----------------------------------------------- */
+/* Exported function prototypes --------------------------------------------- */
 /** @addtogroup CAN_Exported_Functions
   * @{
   */
@@ -511,4 +517,5 @@ void CAN_ClearITPendingBit(CAN_IT_TypeDef CAN_IT);
   */
 #endif /* __STM8S_CAN_H */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

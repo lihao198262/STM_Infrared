@@ -2,20 +2,26 @@
   ********************************************************************************
   * @file    stm8s_uart2.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all functions prototypes and macros for the UART2 peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -380,9 +386,9 @@ typedef enum { UART2_IT_TXE        = (uint16_t)0x0277, /**< Transmit interrupt *
 /**
  * @brief Macro used by the assert_param function in order to check the LIN divider update method
  */
-#define IS_UART2_DIVUP_OK(DivupMethode) \
-  (((DivupMethode) == UART2_LIN_DIVUP_LBRR1) || \
-   ((DivupMethode) == UART2_LIN_DIVUP_NEXTRXNE))
+#define IS_UART2_DIVUP_OK(DivupMethod) \
+  (((DivupMethod) == UART2_LIN_DIVUP_LBRR1) || \
+   ((DivupMethod) == UART2_LIN_DIVUP_NEXTRXNE))
 
 
 /**
@@ -437,4 +443,5 @@ void UART2_ClearITPendingBit(UART2_IT_TypeDef UART2_IT);
   * @}
   */
   
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

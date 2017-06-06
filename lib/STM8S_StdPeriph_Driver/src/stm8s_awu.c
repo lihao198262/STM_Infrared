@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_awu.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all the functions for the AWU peripheral.  
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -66,9 +72,9 @@ CONST uint8_t TBR_Array[17] =
   */
 void AWU_DeInit(void)
 {
-    AWU->CSR = AWU_CSR_RESET_VALUE;
-    AWU->APR = AWU_APR_RESET_VALUE;
-    AWU->TBR = AWU_TBR_RESET_VALUE;
+  AWU->CSR = AWU_CSR_RESET_VALUE;
+  AWU->APR = AWU_APR_RESET_VALUE;
+  AWU->TBR = AWU_TBR_RESET_VALUE;
 }
 
 /**
@@ -81,21 +87,19 @@ void AWU_DeInit(void)
   */
 void AWU_Init(AWU_Timebase_TypeDef AWU_TimeBase)
 {
-
-    /* Check parameter */
-    assert_param(IS_AWU_TIMEBASE_OK(AWU_TimeBase));
-
-    /* Enable the AWU peripheral */
-    AWU->CSR |= AWU_CSR_AWUEN;
-
-    /* Set the TimeBase */
-    AWU->TBR &= (uint8_t)(~AWU_TBR_AWUTB);
-    AWU->TBR |= TBR_Array[(uint8_t)AWU_TimeBase];
-
-    /* Set the APR divider */
-    AWU->APR &= (uint8_t)(~AWU_APR_APR);
-    AWU->APR |= APR_Array[(uint8_t)AWU_TimeBase];
-
+  /* Check parameter */
+  assert_param(IS_AWU_TIMEBASE_OK(AWU_TimeBase));
+  
+  /* Enable the AWU peripheral */
+  AWU->CSR |= AWU_CSR_AWUEN;
+  
+  /* Set the TimeBase */
+  AWU->TBR &= (uint8_t)(~AWU_TBR_AWUTB);
+  AWU->TBR |= TBR_Array[(uint8_t)AWU_TimeBase];
+  
+  /* Set the APR divider */
+  AWU->APR &= (uint8_t)(~AWU_APR_APR);
+  AWU->APR |= APR_Array[(uint8_t)AWU_TimeBase];
 }
 
 /**
@@ -107,16 +111,16 @@ void AWU_Init(AWU_Timebase_TypeDef AWU_TimeBase)
   */
 void AWU_Cmd(FunctionalState NewState)
 {
-    if (NewState != DISABLE)
-    {
-        /* Enable the AWU peripheral */
-        AWU->CSR |= AWU_CSR_AWUEN;
-    }
-    else
-    {
-        /* Disable the AWU peripheral */
-        AWU->CSR &= (uint8_t)(~AWU_CSR_AWUEN);
-    }
+  if (NewState != DISABLE)
+  {
+    /* Enable the AWU peripheral */
+    AWU->CSR |= AWU_CSR_AWUEN;
+  }
+  else
+  {
+    /* Disable the AWU peripheral */
+    AWU->CSR &= (uint8_t)(~AWU_CSR_AWUEN);
+  }
 }
 
 /**
@@ -134,27 +138,26 @@ void AWU_Cmd(FunctionalState NewState)
   */
 void AWU_LSICalibrationConfig(uint32_t LSIFreqHz)
 {
-
-    uint16_t lsifreqkhz = 0x0;
-    uint16_t A = 0x0;
-
-    /* Check parameter */
-    assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
-
-    lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
-
-    /* Calculation of AWU calibration value */
-
-    A = (uint16_t)(lsifreqkhz >> 2U); /* Division by 4, keep integer part only */
-
-    if ((4U * A) >= ((lsifreqkhz - (4U * A)) * (1U + (2U * A))))
-    {
-        AWU->APR = (uint8_t)(A - 2U);
-    }
-    else
-    {
-        AWU->APR = (uint8_t)(A - 1U);
-    }
+  uint16_t lsifreqkhz = 0x0;
+  uint16_t A = 0x0;
+  
+  /* Check parameter */
+  assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
+  
+  lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
+  
+  /* Calculation of AWU calibration value */
+  
+  A = (uint16_t)(lsifreqkhz >> 2U); /* Division by 4, keep integer part only */
+  
+  if ((4U * A) >= ((lsifreqkhz - (4U * A)) * (1U + (2U * A))))
+  {
+    AWU->APR = (uint8_t)(A - 2U);
+  }
+  else
+  {
+    AWU->APR = (uint8_t)(A - 1U);
+  }
 }
 
 /**
@@ -164,11 +167,11 @@ void AWU_LSICalibrationConfig(uint32_t LSIFreqHz)
   */
 void AWU_IdleModeEnable(void)
 {
-    /* Disable AWU peripheral */
-    AWU->CSR &= (uint8_t)(~AWU_CSR_AWUEN);
-
-    /* No AWU timebase */
-    AWU->TBR = (uint8_t)(~AWU_TBR_AWUTB);
+  /* Disable AWU peripheral */
+  AWU->CSR &= (uint8_t)(~AWU_CSR_AWUEN);
+  
+  /* No AWU timebase */
+  AWU->TBR = (uint8_t)(~AWU_TBR_AWUTB);
 }
 
 /**
@@ -179,7 +182,7 @@ void AWU_IdleModeEnable(void)
   */
 FlagStatus AWU_GetFlagStatus(void)
 {
-    return((FlagStatus)(((uint8_t)(AWU->CSR & AWU_CSR_AWUF) == (uint8_t)0x00) ? RESET : SET));
+  return((FlagStatus)(((uint8_t)(AWU->CSR & AWU_CSR_AWUF) == (uint8_t)0x00) ? RESET : SET));
 }
 
 
@@ -191,4 +194,5 @@ FlagStatus AWU_GetFlagStatus(void)
   * @}
   */
   
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

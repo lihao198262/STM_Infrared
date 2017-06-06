@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_clk.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief   This file contains all functions prototype and macros for the CLK peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -71,14 +77,14 @@ typedef enum {
    * @brief   CLK HSI Calibration Value.
    */
 typedef enum {
-  CLK_HSITRIMVALUE_0   = (uint8_t)0x00, /*!< HSI Calibtation Value 0 */
-  CLK_HSITRIMVALUE_1   = (uint8_t)0x01, /*!< HSI Calibtation Value 1 */
-  CLK_HSITRIMVALUE_2   = (uint8_t)0x02, /*!< HSI Calibtation Value 2 */
-  CLK_HSITRIMVALUE_3   = (uint8_t)0x03, /*!< HSI Calibtation Value 3 */
-  CLK_HSITRIMVALUE_4   = (uint8_t)0x04, /*!< HSI Calibtation Value 4 */
-  CLK_HSITRIMVALUE_5   = (uint8_t)0x05, /*!< HSI Calibtation Value 5 */
-  CLK_HSITRIMVALUE_6   = (uint8_t)0x06, /*!< HSI Calibtation Value 6 */
-  CLK_HSITRIMVALUE_7   = (uint8_t)0x07  /*!< HSI Calibtation Value 7 */
+  CLK_HSITRIMVALUE_0   = (uint8_t)0x00, /*!< HSI Calibration Value 0 */
+  CLK_HSITRIMVALUE_1   = (uint8_t)0x01, /*!< HSI Calibration Value 1 */
+  CLK_HSITRIMVALUE_2   = (uint8_t)0x02, /*!< HSI Calibration Value 2 */
+  CLK_HSITRIMVALUE_3   = (uint8_t)0x03, /*!< HSI Calibration Value 3 */
+  CLK_HSITRIMVALUE_4   = (uint8_t)0x04, /*!< HSI Calibration Value 4 */
+  CLK_HSITRIMVALUE_5   = (uint8_t)0x05, /*!< HSI Calibration Value 5 */
+  CLK_HSITRIMVALUE_6   = (uint8_t)0x06, /*!< HSI Calibration Value 6 */
+  CLK_HSITRIMVALUE_7   = (uint8_t)0x07  /*!< HSI Calibration Value 7 */
 } CLK_HSITrimValue_TypeDef;
 
 /**
@@ -112,7 +118,7 @@ typedef enum {
 typedef enum {
   CLK_PERIPHERAL_I2C     = (uint8_t)0x00, /*!< Peripheral Clock Enable 1, I2C */
   CLK_PERIPHERAL_SPI     = (uint8_t)0x01, /*!< Peripheral Clock Enable 1, SPI */
-#if defined(STM8S208) || defined(STM8S207) || defined(STM8AF52Ax) || defined(STM8AF62Ax)
+#if defined(STM8S208) || defined(STM8S207) || defined(STM8S007) || defined(STM8AF52Ax) || defined(STM8AF62Ax)
   CLK_PERIPHERAL_UART1   = (uint8_t)0x02, /*!< Peripheral Clock Enable 1, UART1 */
 #else
   CLK_PERIPHERAL_UART1   = (uint8_t)0x03, /*!< Peripheral Clock Enable 1, UART1 */
@@ -152,20 +158,20 @@ typedef enum {
   CLK_FLAG_AUX     = (uint16_t)0x0402, /*!< Auxiliary oscillator connected to master clock */
   CLK_FLAG_CCOBSY  = (uint16_t)0x0504, /*!< Configurable clock output busy */
   CLK_FLAG_CCORDY  = (uint16_t)0x0502 /*!< Configurable clock output ready */
-
 }CLK_Flag_TypeDef;
 
 /**
    * @brief  CLK interrupt configuration and Flags cleared by software.
    */
 typedef enum {
-  CLK_IT_CSSD   = (uint8_t)0x0C, /*!< Clock security system detection Flag */
-  CLK_IT_SWIF   = (uint8_t)0x1C /*!< Clock switch interrupt Flag */
+  CLK_IT_CSSD = (uint8_t)0x0C, /*!< Clock security system detection Flag */
+  CLK_IT_SWIF = (uint8_t)0x1C /*!< Clock switch interrupt Flag */
 }CLK_IT_TypeDef;
 
 /**
    * @brief   CLK Clock Divisor.
    */
+
 /* Warning:
    0xxxxxx = HSI divider
    1xxxxxx = CPU divider
@@ -203,7 +209,7 @@ typedef enum {
 /** @addtogroup CLK_Exported_Constants
   * @{
   */
-#define CLK_TIMEOUT ((uint16_t)0x491)    /*!< Timeout for the clock switch operation. */
+#define CLK_TIMEOUT ((uint16_t)0xFFFF) /*!< Max Timeout for the clock switch operation. */
 /**
   * @}
   */
@@ -372,4 +378,5 @@ void CLK_ClearITPendingBit(CLK_IT_TypeDef CLK_IT);
   */
 #endif /* __STM8S_CLK_H */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

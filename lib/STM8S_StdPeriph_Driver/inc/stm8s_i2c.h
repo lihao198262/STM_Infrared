@@ -2,20 +2,26 @@
   ******************************************************************************
   * @file    stm8s_i2c.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    25-February-2011
+  * @version V2.2.0
+  * @date    30-September-2014
   * @brief  This file contains all functions prototype and macros for the I2C peripheral.
-  ******************************************************************************
+   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************
   */
 
@@ -292,7 +298,7 @@ typedef enum
     *      is expecting the end of the byte transmission.
     *      The two events I2C_EVENT_SLAVE_BYTE_TRANSMITTED and I2C_EVENT_SLAVE_BYTE_TRANSMITTING
     *      are similar. The second one can optionally be used when the user software
-    *      doesn't guarantee the EV3 is managed before the current byte end of tranfer.
+    *      doesn't guarantee the EV3 is managed before the current byte end of transfer.
     *    - EV3_2: When the master sends a NACK in order to tell slave that data transmission
     *      shall end (before sending the STOP condition).
     *      In this case slave has to stop sending data bytes and expect a Stop
@@ -328,7 +334,7 @@ typedef enum
   */
 #define I2C_MAX_STANDARD_FREQ ((uint32_t)100000)
 #define I2C_MAX_FAST_FREQ     ((uint32_t)400000)
-#if defined (STM8S208) || defined (STM8S207) 
+#if defined(STM8S208) || defined(STM8S207) || defined(STM8S007) 
  #define I2C_MAX_INPUT_FREQ     ((uint8_t)24)
 #else
  #define I2C_MAX_INPUT_FREQ     ((uint8_t)16)
@@ -544,9 +550,9 @@ void I2C_SendData(uint8_t Data);
  *        @note
  *        For error management, it is advised to use the following functions:
  *          - I2C_ITConfig() to configure and enable the error interrupts (I2C_IT_ERR).
- *          - I2C_IRQHandler() which is called when the I2C interurpts occur.
+ *          - I2C_IRQHandler() which is called when the I2C interrupts occur.
  *          - I2C_GetFlagStatus() or I2C_GetITStatus() to be called into the
- *           I2Cx_IRQHandler() function in order to determine which error occured.
+ *           I2Cx_IRQHandler() function in order to determine which error occurred.
  *          - I2C_ClearFlag() or I2C_ClearITPendingBit() and/or I2C_SoftwareResetCmd()
  *            and/or I2C_GenerateStop() in order to clear the error flag and
  *            source and return to correct communication status.
@@ -622,4 +628,5 @@ void I2C_ClearITPendingBit(I2C_ITPendingBit_TypeDef I2C_ITPendingBit);
 
 #endif /* __STM8S_I2C_H */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

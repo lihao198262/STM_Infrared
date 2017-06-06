@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <configuration>
+    <name>Debug</name>
+    <toolchain>
+      <name>STM8</name>
+    </toolchain>
+    <debug>1</debug>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <toolchain>
+      <name>STM8</name>
+    </toolchain>
+    <debug>0</debug>
+  </configuration>
+  <group>
+    <name>src</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\src\infrared.c</name>
+    </file>
+  </group>
+  <group>
+    <name>STM8S_StdPeriph_Driver</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\lib\STM8S_StdPeriph_Driver\src\stm8s_clk.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\lib\STM8S_StdPeriph_Driver\src\stm8s_tim1.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\lib\STM8S_StdPeriph_Driver\src\stm8s_tim2.c</name>
+    </file>
+  </group>
+  <file>
+    <name>$PROJ_DIR$\main.c</name>
+  </file>
+</project>
+
+
