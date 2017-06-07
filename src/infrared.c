@@ -2,13 +2,6 @@
 #include "infrared.h"
 
 
-#define TIMER1_PWM_PORT                 GPIOB
-#define TIMER1_PWM_PIN                  GPIO_Pin_0
-#define TIMER1_PWM_MODE                 GPIO_Mode_Out_PP_High_Fast
-//PWM的频率值
-#define TIMER1_PWM_FREQUENCY_VALUE      16*26   //26us为一个周期
-/* 全局变量定义 */
-
 /*******************************************************************************
  * 名称: TIM1_PWM_Init
  * 功能: TIM1初始化函数 用作PWM输出 38khz
@@ -20,12 +13,19 @@ void TIM1_PWM_Init(void)
 { 
   TIM1_DeInit();
   TIM1_TimeBaseInit(1-1, TIM1_COUNTERMODE_UP, 421, 0x00);       //  2kHz  (8000*1)/16000000
-//  TIM1_OC1Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_DISABLE,
-//               50, TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
-//               TIM1_OCNIDLESTATE_RESET); 
+  
+#ifdef CHANNEL1
+  TIM1_OC1Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_DISABLE,
+               50, TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
+              TIM1_OCNIDLESTATE_RESET); 
+#endif
+  
+#ifdef CHANNEL4
   TIM1_OC4Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, 50, TIM1_OCPOLARITY_LOW, TIM1_OCIDLESTATE_RESET);
   TIM1_CCxCmd(TIM1_CHANNEL_4, ENABLE); 
   TIM1_OC4PreloadConfig(ENABLE);
+#endif
+
   TIM1_Cmd(ENABLE);
   TIM1_CtrlPWMOutputs(ENABLE);
 }
