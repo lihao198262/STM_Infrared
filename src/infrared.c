@@ -172,6 +172,111 @@ void Haier_Infrared_Send(uint8_t data[], int len)
   Infrared_Send_Status(FALSE);
 }
 
+#define MEDIA_HDR_MARK          Infrared_Send_Status(TRUE);     Delay_50Us(88);
+#define MEDIA_HDR_SPACE         Infrared_Send_Status(FALSE);    Delay_50Us(88);
+#define MEDIA_BIT_MARK          Infrared_Send_Status(TRUE);     Delay_50Us(11);
+#define MEDIA_ONE_SPACE         Infrared_Send_Status(FALSE);    Delay_50Us(32);
+#define MEDIA_ZERO_SPACE	Infrared_Send_Status(FALSE);    Delay_50Us(11);
+
+/*******************************************************************************
+ * 名称: Media_Infrared_Send
+ * 功能: 红外发射
+ * 形参: unsigned long data
+ * 返回: 无
+ * 说明: 无 
+ ******************************************************************************/
+void Media_Infrared_Send(unsigned long data)
+{
+  uint8_t a = 0xB2;
+  uint8_t b = 0xBF;
+  uint8_t c = 0x50;
+  
+  MEDIA_HDR_MARK
+  MEDIA_HDR_SPACE
+  
+  uint8_t temp = a;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ONE_SPACE;
+    }
+    else {
+      MEDIA_ZERO_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = a;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ZERO_SPACE;
+    }
+    else {
+      MEDIA_ONE_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = b;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ONE_SPACE;
+    }
+    else {
+      MEDIA_ZERO_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = b;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ZERO_SPACE;
+    }
+    else {
+      MEDIA_ONE_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = c;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ONE_SPACE;
+    }
+    else {
+      MEDIA_ZERO_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = c;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ZERO_SPACE;
+    }
+    else {
+      MEDIA_ONE_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  MEDIA_BIT_MARK;
+  Infrared_Send_Status(FALSE);
+}
+
+
 u32 TimingDelay; 
 
 /*******************************************************************************
