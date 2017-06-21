@@ -15,13 +15,15 @@ void TIM1_PWM_Init(void)
   TIM1_TimeBaseInit(1-1, TIM1_COUNTERMODE_UP, 421, 0x00);       //  2kHz  (8000*1)/16000000
   
 #ifdef CHANNEL1
+  GPIO_Init(GPIOC, GPIO_PIN_1, GPIO_MODE_OUT_PP_LOW_FAST); 
+  
   TIM1_OC1Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_DISABLE,
-               50, TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
+               130, TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
               TIM1_OCNIDLESTATE_RESET); 
 #endif
   
 #ifdef CHANNEL4
-  TIM1_OC4Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, 50, TIM1_OCPOLARITY_LOW, TIM1_OCIDLESTATE_RESET);
+  TIM1_OC4Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, 130, TIM1_OCPOLARITY_LOW, TIM1_OCIDLESTATE_RESET);
   TIM1_CCxCmd(TIM1_CHANNEL_4, ENABLE); 
   TIM1_OC4PreloadConfig(ENABLE);
 #endif
@@ -189,7 +191,7 @@ void Media_Infrared_Send(unsigned long data)
 {
   uint8_t a = 0xB2;
   uint8_t b = 0xBF;
-  uint8_t c = 0x50;
+  uint8_t c = 0x40;
   
   MEDIA_HDR_MARK
   MEDIA_HDR_SPACE
@@ -272,6 +274,88 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
+  MEDIA_BIT_MARK;
+  MEDIA_HDR_SPACE;
+  MEDIA_HDR_MARK;
+  MEDIA_HDR_SPACE;
+  
+  temp = a;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ONE_SPACE;
+    }
+    else {
+      MEDIA_ZERO_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = a;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ZERO_SPACE;
+    }
+    else {
+      MEDIA_ONE_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = b;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ONE_SPACE;
+    }
+    else {
+      MEDIA_ZERO_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = b;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ZERO_SPACE;
+    }
+    else {
+      MEDIA_ONE_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = c;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ONE_SPACE;
+    }
+    else {
+      MEDIA_ZERO_SPACE;
+    }
+    
+    temp <<= 1;
+  }
+  
+  temp = c;
+  for(int i=0;i<8;i++) {
+    MEDIA_BIT_MARK;
+    if(temp & 0x80) {
+      MEDIA_ZERO_SPACE;
+    }
+    else {
+      MEDIA_ONE_SPACE;
+    }
+    
+    temp <<= 1;
+  }
   MEDIA_BIT_MARK;
   Infrared_Send_Status(FALSE);
 }

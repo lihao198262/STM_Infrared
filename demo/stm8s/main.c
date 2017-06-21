@@ -14,9 +14,9 @@ int main( void )
   { 
    // unsigned long b = 0x00FF00FFL;
    // NEC_Infrared_Send(b);
-  Media_Infrared_Send(1);
+    Media_Infrared_Send(1);
  //   Haier_Infrared_Send(data, 14);
-    Delay_50Us(20000); // sleep 1s
+    Delay_50Us(40000); // sleep 1s
   }
 }
 
