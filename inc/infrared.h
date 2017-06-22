@@ -37,11 +37,13 @@ void NEC_Infrared_Send(unsigned long data);
 /*******************************************************************************
  * 名称: Media_Infrared_Send
  * 功能: 红外发射
- * 形参: unsigned long data
+ * 形参:	 uint8_t base	 地址码
+ *				uint8_t high	高位字节
+ *				uint8_t low		低位字节
  * 返回: 无
  * 说明: 无 
  ******************************************************************************/
-void Media_Infrared_Send(unsigned long data);
+void Media_Infrared_Send(uint8_t base, uint8_t high, uint8_t low);
 
 
 /*******************************************************************************

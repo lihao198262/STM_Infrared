@@ -183,20 +183,19 @@ void Haier_Infrared_Send(uint8_t data[], int len)
 /*******************************************************************************
  * 名称: Media_Infrared_Send
  * 功能: 红外发射
- * 形参: unsigned long data
+ * 形参:  uint8_t base	 地址码
+ *        uint8_t high	高位字节
+ *        uint8_t low		低位字节
  * 返回: 无
  * 说明: 无 
  ******************************************************************************/
-void Media_Infrared_Send(unsigned long data)
+void Media_Infrared_Send(uint8_t base, uint8_t high, uint8_t low)
 {
-  uint8_t a = 0xB2;
-  uint8_t b = 0xBF;
-  uint8_t c = 0x40;
-  
+
   MEDIA_HDR_MARK
   MEDIA_HDR_SPACE
   
-  uint8_t temp = a;
+  uint8_t temp = base;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -209,7 +208,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = a;
+  temp = base;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -222,7 +221,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = b;
+  temp = high;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -235,7 +234,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = b;
+  temp = high;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -248,7 +247,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = c;
+  temp = low;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -261,7 +260,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = c;
+  temp = low;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -279,7 +278,7 @@ void Media_Infrared_Send(unsigned long data)
   MEDIA_HDR_MARK;
   MEDIA_HDR_SPACE;
   
-  temp = a;
+  temp = base;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -292,7 +291,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = a;
+  temp = base;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -305,7 +304,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = b;
+  temp = high;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -318,7 +317,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = b;
+  temp = high;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -331,7 +330,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = c;
+  temp = low;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
@@ -344,7 +343,7 @@ void Media_Infrared_Send(unsigned long data)
     temp <<= 1;
   }
   
-  temp = c;
+  temp = low;
   for(int i=0;i<8;i++) {
     MEDIA_BIT_MARK;
     if(temp & 0x80) {
